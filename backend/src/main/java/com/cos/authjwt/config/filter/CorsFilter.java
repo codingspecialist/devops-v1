@@ -10,7 +10,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 // React 할려면 필요함 (Javascript 때문에)
-public class CorsFilter implements Filter{
+// Nginx Proxy Pass 사용하면 안써도 됨.
+public class CorsFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -19,14 +20,14 @@ public class CorsFilter implements Filter{
 		resp.setHeader("Access-Control-Allow-Origin", "*");
 		resp.setHeader("Access-Control-Allow-Methods", "*");
 		resp.setHeader("Access-Control-Allow-Headers", "*");
-		// 해당 헤더가 없으면 아래 7가지의 header값만 응답할 수 있다. 
-		//Cache-Control
-		//Content-Language
-		//Content-Length
-		//Content-Type
-		//Expires
-		//Last-Modified
-		//Pragma
+		// 해당 헤더가 없으면 아래 7가지의 header값만 응답할 수 있다.
+		// Cache-Control
+		// Content-Language
+		// Content-Length
+		// Content-Type
+		// Expires
+		// Last-Modified
+		// Pragma
 		resp.setHeader("Access-Control-Expose-Headers", "*");
 		chain.doFilter(request, response);
 	}

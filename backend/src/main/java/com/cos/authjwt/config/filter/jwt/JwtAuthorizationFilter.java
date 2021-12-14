@@ -21,12 +21,12 @@ import com.cos.authjwt.handler.ex.CustomApiException;
 
 import lombok.RequiredArgsConstructor;
 
-// /post/**, /user/**,
+// /api/post/**, /api/user/**,
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter implements Filter {
 
 	private final UserRepository userRepository;
-	
+
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -41,20 +41,19 @@ public class JwtAuthorizationFilter implements Filter {
 
 		if (jwtToken == null) {
 			PrintWriter out = resp.getWriter();
-			out.println("jwtToken not found"); 
+			out.println("jwtToken not found");
 			out.flush();
 		} else {
 			jwtToken = jwtToken.replace(JwtProps.AUTH, "");
-			System.out.println("변경된 토큰 : "+jwtToken);
+			System.out.println("변경된 토큰 : " + jwtToken);
 			try {
 				DecodedJWT decodeJwt = JWT.require(Algorithm.HMAC512(JwtProps.SECRET)).build().verify(jwtToken);
 
 				Integer userId = decodeJwt.getClaim("id").asInt();
 				User principal = userRepository.findById(userId).orElseThrow(
-						() -> new CustomApiException("해당 유저 아이디 "+userId+"는 존재하지 않습니다")
-				);
+						() -> new CustomApiException("해당 유저 아이디 " + userId + "는 존재하지 않습니다"));
 
-				System.out.println("인가 필터 : principal : "+principal);
+				System.out.println("인가 필터 : principal : " + principal);
 				HttpSession session = req.getSession();
 				session.setAttribute("principal", principal);
 				chain.doFilter(req, resp); // 다시 체인을 타게 해야 한다.
