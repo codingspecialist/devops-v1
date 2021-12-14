@@ -2,7 +2,7 @@
   "name": "myapp",
   "version": "0.1.0",
   "private": true,
-  "proxy": "webserver:8080",
+  //"proxy": "localhost:8080", // 이부분은 node.js 개발환경에서만 가능
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^11.2.7",

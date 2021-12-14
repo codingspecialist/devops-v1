@@ -1,0 +1,17 @@
+version: "3"
+services:
+  backend:
+    container_name: "backend"
+    restart: always
+    build: ./backend/.
+    ports:
+      - "8080:8080"
+
+  frontend:
+    container_name: "frontend"
+    restart: always
+    build: ./frontend/.
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
