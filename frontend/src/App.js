@@ -5,7 +5,7 @@ function App() {
   const [posts, setPosts] = useState([]);
 
   async function fetchPosts() {
-    let response = await fetch("/init/post");
+    let response = await fetch("/api/init/post");
     let parseResponse = await response.json();
     setPosts(parseResponse.data);
   }
