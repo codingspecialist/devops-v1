@@ -3,14 +3,7 @@ package com.cos.authjwt.domain.post;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
+import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,6 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "post_tb")
 @Entity
 public class Post {
 	@Id
@@ -36,17 +30,17 @@ public class Post {
 	private String title;
 	@Column(nullable = false, length = 10000)
 	private String content;
-	
+
 	@JoinColumn(nullable = false, name = "userId")
 	@ManyToOne
 	private User user;
-	
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
 	@CreationTimestamp
 	private LocalDateTime created;
-	
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
 	@UpdateTimestamp
 	private LocalDateTime updated;
-	
+
 }
